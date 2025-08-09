@@ -15,6 +15,7 @@
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@sveltejs/adapter-auto": "^6.0.0",
+		"@sveltejs/adapter-static": "^3.0.9",
 		"@sveltejs/kit": "^2.22.0",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
 		"eslint": "^9.18.0",
@@ -139,5 +140,13 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ZedZed34/Calories-Counter.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ZedZed34/Calories-Counter/issues"
+	},
+	"homepage": "https://github.com/ZedZed34/Calories-Counter#readme"
 }

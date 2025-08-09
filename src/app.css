@@ -1,0 +1,6 @@
+:root {
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body, #svelte { margin:0; height:100%; }
+body { font-family: system-ui, Segoe UI, Inter, Roboto, Arial, sans-serif; }
