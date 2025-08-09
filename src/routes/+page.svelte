@@ -5,10 +5,25 @@
   import ResultCard from '$lib/components/ResultCard.svelte';
   import { get } from 'svelte/store';
 
-  $: u = get(user);
-  $: bmrValue = bmr(u);
-  $: tdeeValue = tdee({ bmrValue, activityKey: u.activityKey });
-  $: g = goals({ tdeeValue, weightKg: u.weightKg, cutPct: u.cutPct, bulkPct: u.bulkPct });
+  let showResults = false;
+  let bmrValue = 0;
+  let tdeeValue = 0;
+  let g = { maintenance: {}, cut: {}, bulk: {} };
+
+  function handleCalculate(event) {
+    const userData = event.detail;
+    
+    // Validate that all required fields are filled
+    if (!userData.sex || !userData.age || !userData.heightCm || !userData.weightKg || !userData.activityKey || !userData.targetWeightKg) {
+      alert('Please fill in all fields before calculating.');
+      return;
+    }
+    
+    showResults = true;
+    bmrValue = bmr(userData);
+    tdeeValue = tdee({ bmrValue, activityKey: userData.activityKey });
+    g = goals({ tdeeValue, weightKg: userData.weightKg, targetWeightKg: userData.targetWeightKg });
+  }
 </script>
 
 <svelte:head>
@@ -28,19 +43,25 @@
   </aside>
 
   <main>
-    <UserForm showAdvanced={true} />
+    <UserForm showAdvanced={true} on:calculate={handleCalculate} />
 
-    <section class="grid">
-      <ResultCard title="BMR"  kcal={bmrValue} proteinG={g.maintenance.proteinG} fatG={g.maintenance.fatG} carbsG={g.maintenance.carbsG} />
-      <ResultCard title="TDEE (Maintenance)" kcal={tdeeValue} proteinG={g.maintenance.proteinG} fatG={g.maintenance.fatG} carbsG={g.maintenance.carbsG} />
-      <ResultCard title="Cut (Deficit)" kcal={g.cut.kcal} proteinG={g.cut.proteinG} fatG={g.cut.fatG} carbsG={g.cut.carbsG} />
-      <ResultCard title="Bulk (Surplus)" kcal={g.bulk.kcal} proteinG={g.bulk.proteinG} fatG={g.bulk.fatG} carbsG={g.bulk.carbsG} />
-    </section>
+    {#if showResults}
+      <section class="grid">
+        <ResultCard title="BMR"  kcal={bmrValue} proteinG={g.maintenance.proteinG} fatG={g.maintenance.fatG} carbsG={g.maintenance.carbsG} />
+        <ResultCard title="TDEE (Maintenance)" kcal={tdeeValue} proteinG={g.maintenance.proteinG} fatG={g.maintenance.fatG} carbsG={g.maintenance.carbsG} />
+        <ResultCard title="Cut (Deficit)" kcal={g.cut.kcal} proteinG={g.cut.proteinG} fatG={g.cut.fatG} carbsG={g.cut.carbsG} />
+        <ResultCard title="Bulk (Surplus)" kcal={g.bulk.kcal} proteinG={g.bulk.proteinG} fatG={g.bulk.fatG} carbsG={g.bulk.carbsG} />
+      </section>
+    {:else}
+      <div class="placeholder">
+        <p>Fill in your details above (including your target weight goal) and click "Get Result" to see your personalized calorie calculations!</p>
+      </div>
+    {/if}
   </main>
 </div>
 
 <style>
-  :root {
+  :global(:root) {
     --bg: #0b0d10;
     --surface: #131820;
     --line: #2a3441;
@@ -55,6 +76,19 @@
   nav a:hover { opacity:1; }
   main { padding:1.25rem; display:flex; flex-direction:column; gap:1rem; }
   .grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:1rem; }
+  .placeholder { 
+    text-align: center; 
+    padding: 3rem 2rem; 
+    background: var(--surface); 
+    border-radius: 12px; 
+    margin-top: 1rem;
+    border: 2px dashed var(--line);
+  }
+  .placeholder p { 
+    color: var(--muted); 
+    font-size: 1.1rem;
+    margin: 0;
+  }
   @media (max-width: 900px) {
     .shell { grid-template-columns: 1fr; }
     aside { border-right: none; border-bottom:1px solid var(--line); }

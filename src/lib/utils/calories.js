@@ -19,13 +19,32 @@ export function tdee({ bmrValue, activityKey }) {
 }
 
 // Returns calories for different goals
-// cutPct: typical 10–25%; bulkPct: typical 5–20%
+// targetWeightKg: desired target weight - automatically determines cutting or bulking
+// Uses ~7700 calories per kg of fat for calorie calculations
 // macros are optional simple defaults: P=1.8g/kg, F=25% kcal, rest carbs
-export function goals({ tdeeValue, weightKg, cutPct = 0.20, bulkPct = 0.10 }) {
+export function goals({ tdeeValue, weightKg, targetWeightKg }) {
   const maintenance = tdeeValue;
-
-  const deficit = Math.round(maintenance * (1 - cutPct));
-  const surplus  = Math.round(maintenance * (1 + bulkPct));
+  
+  // Calculate weight difference (positive = need to lose, negative = need to gain)
+  const weightDifference = weightKg - targetWeightKg;
+  
+  // Determine if cutting (losing weight) or bulking (gaining weight)
+  const isCutting = weightDifference > 0;
+  const weightToChange = Math.abs(weightDifference);
+  
+  // Set appropriate timeframes based on goal
+  const daysTarget = isCutting ? 12 * 7 : 16 * 7; // 12 weeks cut, 16 weeks bulk
+  
+  // Calculate daily calorie adjustment
+  const dailyCalorieAdjustment = Math.round((weightToChange * 7700) / daysTarget);
+  
+  // Calculate target calories (deficit for cutting, surplus for bulking)
+  const targetCalories = isCutting 
+    ? Math.round(maintenance - dailyCalorieAdjustment)
+    : Math.round(maintenance + dailyCalorieAdjustment);
+  
+  const deficit = isCutting ? targetCalories : Math.round(maintenance * 0.8); // Default 20% deficit
+  const surplus = !isCutting ? targetCalories : Math.round(maintenance * 1.1); // Default 10% surplus
 
   // very simple macro helpers (can be tweaked in UI)
   const proteinG = Math.round(1.8 * weightKg);
