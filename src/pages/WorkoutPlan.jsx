@@ -13,7 +13,7 @@ export default function WorkoutPlan() {
 
   function handleCalculate(formData) {
     // Validate that required fields are filled
-    if (!formData.sex || !formData.age || !formData.currentWeight || !formData.targetWeight) {
+    if (!formData.sex || !formData.age || !formData.height || !formData.currentWeight || !formData.targetWeight) {
       setShowModal(true);
       return;
     }
@@ -30,11 +30,11 @@ export default function WorkoutPlan() {
     let recommendation = '';
     
     if (weightDifference > 2) { // Want to lose weight
-      goal = 'lose-fat';
+      goal = 'fat-loss';
       // For fat loss, recommend more frequent training with shorter sessions
       recommendation = weightDifferencePercent > 15 ? 'upper-lower' : 'full-body';
     } else if (weightDifference < -2) { // Want to gain weight  
-      goal = 'build-muscle';
+      goal = 'bulk';
       // For muscle building, recommend higher volume splits
       recommendation = 'ppl';
     } else { // Maintain weight
@@ -46,6 +46,7 @@ export default function WorkoutPlan() {
     setWorkoutPlan({
       currentWeight: data.currentWeight,
       targetWeight: data.targetWeight,
+      height: data.height,
       goal: goal,
       recommendation: recommendation,
       sex: data.sex,
@@ -110,6 +111,7 @@ export default function WorkoutPlan() {
     const [form, setForm] = useState({
       sex: '',
       age: '',
+      height: '',
       currentWeight: '',
       targetWeight: ''
     });
@@ -125,7 +127,7 @@ export default function WorkoutPlan() {
     return (
       <div className="card">
         <h2 className="title">Your Details (Metric)</h2>
-        <div className="grid">
+        <div className="form-grid">
           <select 
             value={form.sex} 
             onChange={(e) => handleInputChange('sex', e.target.value)}
@@ -142,6 +144,16 @@ export default function WorkoutPlan() {
             value={form.age} 
             onChange={(e) => handleInputChange('age', e.target.value)}
             placeholder="Enter your age" 
+          />
+
+          <input 
+            type="number" 
+            min="100" 
+            max="230" 
+            step="1" 
+            value={form.height} 
+            onChange={(e) => handleInputChange('height', e.target.value)}
+            placeholder="Enter your height (cm)" 
           />
 
           <input 
@@ -181,8 +193,8 @@ export default function WorkoutPlan() {
         <div className="workout-section">
           <div className="goal-summary">
             <h3>Your Goal: <span className={`goal-${workoutPlan.goal}`}>
-              {workoutPlan.goal === 'lose-fat' ? 'Lose Fat' : 
-               workoutPlan.goal === 'build-muscle' ? 'Build Muscle' : 'Maintain Weight'}
+              {workoutPlan.goal === 'fat-loss' ? 'Fat Loss' : 
+               workoutPlan.goal === 'bulk' ? 'Bulk' : 'Maintain Weight'}
             </span></h3>
             <div className="calories-summary">
               <span>Current: {workoutPlan.currentWeight} kg</span>
