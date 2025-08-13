@@ -15,9 +15,9 @@
   font-size: 1.25rem;
 }
 
-.goal-cutting { color: #ef4444; }
-.goal-bulking { color: #22c55e; }
-.goal-maintenance { color: #3b82f6; }
+.goal-lose-fat { color: #ef4444; }
+.goal-build-muscle { color: #22c55e; }
+.goal-maintain { color: #3b82f6; }
 
 .calories-summary {
   display: flex;

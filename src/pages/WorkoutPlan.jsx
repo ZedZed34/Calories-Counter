@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { bmr, tdee, goals } from '../utils/calories';
-import UserForm from '../components/UserForm';
 import Modal from '../components/Modal';
 import './WorkoutPlan.css';
 
@@ -14,42 +12,44 @@ export default function WorkoutPlan() {
   }, []);
 
   function handleCalculate(formData) {
-    // Validate that all required fields are filled
-    if (!formData.sex || !formData.age || !formData.heightCm || !formData.weightKg || !formData.activityKey || !formData.targetWeightKg) {
+    // Validate that required fields are filled
+    if (!formData.sex || !formData.age || !formData.currentWeight || !formData.targetWeight) {
       setShowModal(true);
       return;
     }
-    
 
     generateWorkoutRecommendation(formData);
   }
 
   function generateWorkoutRecommendation(data) {
-    const bmrValue = bmr(data);
-    const tdeeValue = tdee({ bmrValue, activityKey: data.activityKey });
-    const goalsData = goals({ tdeeValue, weightKg: data.weightKg, targetWeightKg: data.targetWeightKg });
+    // Determine goal based on weight difference
+    const weightDifference = parseFloat(data.currentWeight) - parseFloat(data.targetWeight);
+    const weightDifferencePercent = Math.abs(weightDifference) / parseFloat(data.currentWeight) * 100;
     
-    // Determine if user is cutting, bulking, or maintaining
-    const weightDifference = data.weightKg - data.targetWeightKg;
-    const isCutting = weightDifference > 0;
-    const isBulking = weightDifference < 0;
-    
+    let goal = '';
     let recommendation = '';
-    if (isCutting) {
-      recommendation = 'upper-lower'; // Better for cutting - more frequent training
-    } else if (isBulking) {
-      recommendation = 'ppl'; // Better for bulking - more volume per muscle group
-    } else {
-      recommendation = 'upper-lower'; // Maintenance - balanced approach
+    
+    if (weightDifference > 2) { // Want to lose weight
+      goal = 'lose-fat';
+      // For fat loss, recommend more frequent training with shorter sessions
+      recommendation = weightDifferencePercent > 15 ? 'upper-lower' : 'full-body';
+    } else if (weightDifference < -2) { // Want to gain weight  
+      goal = 'build-muscle';
+      // For muscle building, recommend higher volume splits
+      recommendation = 'ppl';
+    } else { // Maintain weight
+      goal = 'maintain';
+      recommendation = 'upper-lower';
     }
     
     setSelectedSplit(recommendation);
     setWorkoutPlan({
-      bmr: bmrValue,
-      tdee: tdeeValue,
-      goals: goalsData,
-      goal: isCutting ? 'cutting' : isBulking ? 'bulking' : 'maintenance',
-      recommendation
+      currentWeight: data.currentWeight,
+      targetWeight: data.targetWeight,
+      goal: goal,
+      recommendation: recommendation,
+      sex: data.sex,
+      age: data.age
     });
   }
 
@@ -57,47 +57,139 @@ export default function WorkoutPlan() {
     setSelectedSplit(split);
   }
 
-  const upperLowerPlan = {
-    title: "Upper/Lower Body Split",
-    description: "4-day routine alternating between upper and lower body workouts",
-    schedule: [
-      { day: "Monday", workout: "Upper Body", exercises: ["Bench Press", "Bent-Over Row", "Shoulder Press", "Pull-ups", "Dips", "Bicep Curls", "Tricep Extensions"] },
-      { day: "Tuesday", workout: "Lower Body", exercises: ["Squats", "Romanian Deadlifts", "Bulgarian Split Squats", "Hip Thrusts", "Calf Raises", "Leg Curls"] },
-      { day: "Wednesday", workout: "Rest", exercises: [] },
-      { day: "Thursday", workout: "Upper Body", exercises: ["Incline Dumbbell Press", "T-Bar Row", "Lateral Raises", "Lat Pulldowns", "Close-Grip Bench", "Hammer Curls", "Overhead Tricep Press"] },
-      { day: "Friday", workout: "Lower Body", exercises: ["Deadlifts", "Front Squats", "Walking Lunges", "Leg Press", "Calf Raises", "Leg Extensions"] },
-      { day: "Saturday", workout: "Rest", exercises: [] },
-      { day: "Sunday", workout: "Rest", exercises: [] }
-    ]
+  const workoutPlans = {
+    'full-body': {
+      title: "Full Body Workout",
+      description: "3 days/week • Ideal for beginners • Perfect for fat loss",
+      frequency: "3x week",
+      duration: "45-60 mins",
+      schedule: [
+        { day: "Monday", workout: "Full Body A", exercises: ["Squats", "Bench Press", "Bent-Over Row", "Shoulder Press", "Deadlifts", "Plank"] },
+        { day: "Tuesday", workout: "Rest", exercises: [] },
+        { day: "Wednesday", workout: "Full Body B", exercises: ["Deadlifts", "Incline Press", "Pull-ups", "Dips", "Lunges", "Russian Twists"] },
+        { day: "Thursday", workout: "Rest", exercises: [] },
+        { day: "Friday", workout: "Full Body C", exercises: ["Front Squats", "Dumbbell Press", "Cable Rows", "Lateral Raises", "Romanian Deadlifts", "Mountain Climbers"] },
+        { day: "Saturday", workout: "Rest", exercises: [] },
+        { day: "Sunday", workout: "Rest", exercises: [] }
+      ]
+    },
+    'upper-lower': {
+      title: "Upper/Lower Split",
+      description: "4 days/week • Great for intermediates • Balanced approach",
+      frequency: "4x week",
+      duration: "50-70 mins",
+      schedule: [
+        { day: "Monday", workout: "Upper Body", exercises: ["Bench Press", "Bent-Over Row", "Shoulder Press", "Pull-ups", "Dips", "Bicep Curls", "Tricep Extensions"] },
+        { day: "Tuesday", workout: "Lower Body", exercises: ["Squats", "Romanian Deadlifts", "Bulgarian Split Squats", "Hip Thrusts", "Calf Raises", "Leg Curls"] },
+        { day: "Wednesday", workout: "Rest", exercises: [] },
+        { day: "Thursday", workout: "Upper Body", exercises: ["Incline Dumbbell Press", "T-Bar Row", "Lateral Raises", "Lat Pulldowns", "Close-Grip Bench", "Hammer Curls"] },
+        { day: "Friday", workout: "Lower Body", exercises: ["Deadlifts", "Front Squats", "Walking Lunges", "Leg Press", "Calf Raises", "Leg Extensions"] },
+        { day: "Saturday", workout: "Rest", exercises: [] },
+        { day: "Sunday", workout: "Rest", exercises: [] }
+      ]
+    },
+    'ppl': {
+      title: "Push, Pull, Legs Split",
+      description: "6 days/week • Advanced • Maximum muscle building",
+      frequency: "6x week",
+      duration: "60-90 mins",
+      schedule: [
+        { day: "Monday", workout: "Push", exercises: ["Bench Press", "Shoulder Press", "Incline Dumbbell Press", "Lateral Raises", "Dips", "Tricep Pushdowns"] },
+        { day: "Tuesday", workout: "Pull", exercises: ["Deadlifts", "Pull-ups", "Bent-Over Row", "T-Bar Row", "Face Pulls", "Bicep Curls", "Hammer Curls"] },
+        { day: "Wednesday", workout: "Legs", exercises: ["Squats", "Romanian Deadlifts", "Leg Press", "Walking Lunges", "Calf Raises", "Leg Curls"] },
+        { day: "Thursday", workout: "Push", exercises: ["Incline Barbell Press", "Dumbbell Shoulder Press", "Decline Press", "Cable Lateral Raises", "Close-Grip Bench"] },
+        { day: "Friday", workout: "Pull", exercises: ["Rack Pulls", "Cable Rows", "Lat Pulldowns", "Reverse Flyes", "Cable Curls", "Preacher Curls"] },
+        { day: "Saturday", workout: "Legs", exercises: ["Front Squats", "Stiff Leg Deadlifts", "Bulgarian Split Squats", "Hip Thrusts", "Standing Calf Raises"] },
+        { day: "Sunday", workout: "Rest", exercises: [] }
+      ]
+    }
   };
 
-  const pplPlan = {
-    title: "Push, Pull, Legs (PPL) Split",
-    description: "6-day routine targeting push muscles, pull muscles, and legs separately",
-    schedule: [
-      { day: "Monday", workout: "Push", exercises: ["Bench Press", "Shoulder Press", "Incline Dumbbell Press", "Lateral Raises", "Dips", "Tricep Pushdowns", "Overhead Press"] },
-      { day: "Tuesday", workout: "Pull", exercises: ["Deadlifts", "Pull-ups", "Bent-Over Row", "T-Bar Row", "Face Pulls", "Bicep Curls", "Hammer Curls"] },
-      { day: "Wednesday", workout: "Legs", exercises: ["Squats", "Romanian Deadlifts", "Leg Press", "Walking Lunges", "Calf Raises", "Leg Curls", "Leg Extensions"] },
-      { day: "Thursday", workout: "Push", exercises: ["Incline Barbell Press", "Dumbbell Shoulder Press", "Decline Press", "Cable Lateral Raises", "Close-Grip Bench", "Diamond Push-ups"] },
-      { day: "Friday", workout: "Pull", exercises: ["Rack Pulls", "Cable Rows", "Lat Pulldowns", "Reverse Flyes", "Cable Curls", "Preacher Curls", "Shrugs"] },
-      { day: "Saturday", workout: "Legs", exercises: ["Front Squats", "Stiff Leg Deadlifts", "Bulgarian Split Squats", "Hip Thrusts", "Standing Calf Raises", "Seated Calf Raises"] },
-      { day: "Sunday", workout: "Rest", exercises: [] }
-    ]
-  };
+  // Custom form component for workout plans (no activity level needed)
+  function WorkoutForm({ onCalculate }) {
+    const [form, setForm] = useState({
+      sex: '',
+      age: '',
+      currentWeight: '',
+      targetWeight: ''
+    });
+
+    function handleInputChange(field, value) {
+      setForm(prev => ({ ...prev, [field]: value }));
+    }
+
+    function handleSubmit() {
+      onCalculate(form);
+    }
+
+    return (
+      <div className="card">
+        <h2 className="title">Your Details (Metric)</h2>
+        <div className="grid">
+          <select 
+            value={form.sex} 
+            onChange={(e) => handleInputChange('sex', e.target.value)}
+          >
+            <option value="" disabled>Select your sex</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
+          <input 
+            type="number" 
+            min="10" 
+            max="100" 
+            value={form.age} 
+            onChange={(e) => handleInputChange('age', e.target.value)}
+            placeholder="Enter your age" 
+          />
+
+          <input 
+            type="number" 
+            min="30" 
+            max="250" 
+            step="0.1" 
+            value={form.currentWeight} 
+            onChange={(e) => handleInputChange('currentWeight', e.target.value)}
+            placeholder="Enter your weight (kg)" 
+          />
+
+          <input 
+            type="number" 
+            min="40" 
+            max="200" 
+            step="0.5" 
+            value={form.targetWeight} 
+            onChange={(e) => handleInputChange('targetWeight', e.target.value)}
+            placeholder="Enter your target weight (kg)" 
+          />
+        </div>
+        
+        <button className="get-result-btn" onClick={handleSubmit}>
+          Get Result
+        </button>
+      </div>
+    );
+  }
 
   return (
     <>
       <h2>Workout Plan Generator</h2>
-      <UserForm showAdvanced={true} onCalculate={handleCalculate} />
+      <WorkoutForm onCalculate={handleCalculate} />
 
       {workoutPlan && (
         <div className="workout-section">
           <div className="goal-summary">
-            <h3>Your Goal: <span className={`goal-${workoutPlan.goal}`}>{workoutPlan.goal.charAt(0).toUpperCase() + workoutPlan.goal.slice(1)}</span></h3>
+            <h3>Your Goal: <span className={`goal-${workoutPlan.goal}`}>
+              {workoutPlan.goal === 'lose-fat' ? 'Lose Fat' : 
+               workoutPlan.goal === 'build-muscle' ? 'Build Muscle' : 'Maintain Weight'}
+            </span></h3>
             <div className="calories-summary">
-              <span>BMR: {workoutPlan.bmr} kcal</span>
-              <span>TDEE: {workoutPlan.tdee} kcal</span>
-              <span>Target: {workoutPlan.goals[workoutPlan.goal === 'cutting' ? 'cut' : workoutPlan.goal === 'bulking' ? 'bulk' : 'maintenance'].kcal} kcal</span>
+              <span>Current: {workoutPlan.currentWeight} kg</span>
+              <span>Target: {workoutPlan.targetWeight} kg</span>
+              <span>Goal: {Math.abs(parseFloat(workoutPlan.currentWeight) - parseFloat(workoutPlan.targetWeight)).toFixed(1)} kg {
+                parseFloat(workoutPlan.currentWeight) > parseFloat(workoutPlan.targetWeight) ? 'loss' : 'gain'
+              }</span>
             </div>
           </div>
 
@@ -105,51 +197,39 @@ export default function WorkoutPlan() {
             <h3>Choose Your Workout Split</h3>
             <div className="split-options">
               <button 
+                className={`split-option ${selectedSplit === 'full-body' ? 'active' : ''}`}
+                onClick={() => handleSplitChange('full-body')}
+              >
+                <h4>Full Body</h4>
+                <p>{workoutPlans['full-body'].description}</p>
+              </button>
+              <button 
                 className={`split-option ${selectedSplit === 'upper-lower' ? 'active' : ''}`}
                 onClick={() => handleSplitChange('upper-lower')}
               >
                 <h4>Upper/Lower Split</h4>
-                <p>4 days/week • Great for beginners • Good for cutting</p>
+                <p>{workoutPlans['upper-lower'].description}</p>
               </button>
               <button 
                 className={`split-option ${selectedSplit === 'ppl' ? 'active' : ''}`}
                 onClick={() => handleSplitChange('ppl')}
               >
                 <h4>Push, Pull, Legs</h4>
-                <p>6 days/week • Advanced • Great for bulking</p>
+                <p>{workoutPlans['ppl'].description}</p>
               </button>
             </div>
           </div>
 
           <div className="workout-plan">
-            {selectedSplit === 'upper-lower' && (
+            {selectedSplit && workoutPlans[selectedSplit] && (
               <div className="plan-details">
-                <h3>{upperLowerPlan.title}</h3>
-                <p>{upperLowerPlan.description}</p>
+                <h3>{workoutPlans[selectedSplit].title}</h3>
+                <p>
+                  <strong>{workoutPlans[selectedSplit].frequency}</strong> • 
+                  <strong> {workoutPlans[selectedSplit].duration}</strong>
+                </p>
                 <div className="weekly-schedule">
-                  {upperLowerPlan.schedule.map((day, index) => (
-                    <div key={index} className={`day-card ${day.workout === 'Rest' ? 'rest-day' : ''}`}>
-                      <h4>{day.day}</h4>
-                      <h5>{day.workout}</h5>
-                      {day.exercises.length > 0 && (
-                        <ul>
-                          {day.exercises.map((exercise, i) => (
-                            <li key={i}>{exercise}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {selectedSplit === 'ppl' && (
-              <div className="plan-details">
-                <h3>{pplPlan.title}</h3>
-                <p>{pplPlan.description}</p>
-                <div className="weekly-schedule">
-                  {pplPlan.schedule.map((day, index) => (
+                  {workoutPlans[selectedSplit].schedule.map((day, index) => (
                     <div key={index} className={`day-card ${day.workout === 'Rest' ? 'rest-day' : ''}`}>
                       <h4>{day.day}</h4>
                       <h5>{day.workout}</h5>
