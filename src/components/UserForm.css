@@ -6,7 +6,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .title { 
@@ -16,7 +16,8 @@
 .grid { 
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-  gap: 1.5rem; 
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .span-2 { 
@@ -34,6 +35,17 @@ input, select {
   backdrop-filter: blur(5px);
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23e8edf4' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.5rem;
+  padding-right: 3rem;
+}
+
 input::placeholder {
   color: var(--muted);
   opacity: 0.7;
@@ -46,8 +58,21 @@ input:focus, select:focus {
   transform: translateY(-1px);
 }
 
+select option {
+  background: var(--surface);
+  color: #e8edf4;
+  border: none;
+  padding: 0.5rem;
+}
+
 select option[disabled] {
   color: var(--muted);
+  background: var(--bg);
+}
+
+select option:checked {
+  background: #3b82f6;
+  color: white;
 }
 
 select:invalid {

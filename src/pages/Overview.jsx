@@ -33,8 +33,7 @@ export default function Overview() {
   }, []);
 
   return (
-    <>
-
+    <div className="overview-page">
       <UserForm showAdvanced={true} onCalculate={handleCalculate} />
 
       {showResults ? (
@@ -54,6 +53,6 @@ export default function Overview() {
         <h3>Missing Information</h3>
         <p>Please fill out your details.</p>
       </Modal>
-    </>
+    </div>
   );
 }

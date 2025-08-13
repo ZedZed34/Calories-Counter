@@ -185,7 +185,7 @@ export default function WorkoutPlan() {
   }
 
   return (
-    <>
+    <div className="workout-page">
       <h2>Workout Plan Generator</h2>
       <WorkoutForm onCalculate={handleCalculate} />
 
@@ -271,6 +271,6 @@ export default function WorkoutPlan() {
         <h3>Missing Information</h3>
         <p>Please fill out your details.</p>
       </Modal>
-    </>
+    </div>
   );
 }

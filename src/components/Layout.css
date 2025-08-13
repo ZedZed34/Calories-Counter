@@ -131,10 +131,28 @@ main {
   width: 100%;
 }
 
+.overview-page, .workout-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.workout-page h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+  color: #e8edf4;
+}
+
 .grid { 
   display:grid; 
   grid-template-columns: repeat(2, minmax(0,1fr)); 
-  gap:1rem; 
+  gap:1rem;
+  width: 100%;
 }
 
 .placeholder { 
