@@ -11,26 +11,113 @@ aside {
   border-right:1px solid var(--line); 
 }
 
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: .75rem;
+}
+
 aside h1 { 
-  margin:0 0 .75rem 0; 
+  margin: 0; 
   font-size:1.25rem; 
+}
+
+.menu-toggle {
+  display: block;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background-color: var(--line);
+}
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  width: 20px;
+  height: 15px;
+  position: relative;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: #e8edf4;
+  border-radius: 1px;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: absolute;
+}
+
+.hamburger span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger span:nth-child(2) {
+  top: 6px;
+}
+
+.hamburger span:nth-child(3) {
+  top: 12px;
+}
+
+/* Hamburger animation when open */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg);
+  top: 6px;
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg);
+  top: 6px;
 }
 
 nav { 
   display:flex; 
   flex-direction:column; 
-  gap:.5rem; 
+  gap:.5rem;
+  max-height: 200px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+nav:not(.nav-open) {
+  max-height: 0;
+  padding: 0;
+}
+
+nav.nav-open {
+  max-height: 200px;
+  padding: 0.75rem 0 0 0;
 }
 
 nav a { 
   color:#e8edf4; 
   text-decoration:none; 
   opacity:.85; 
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+nav a:last-child {
+  border-bottom: none;
 }
 
 nav a:hover, nav a.active { 
   opacity:1; 
+  background-color: var(--surface);
+  padding-left: 0.5rem;
 }
 
 main { 
@@ -68,7 +155,8 @@ main {
   
   aside { 
     border-right: none; 
-    border-bottom:1px solid var(--line); 
+    border-bottom:1px solid var(--line);
+    position: relative;
   }
   
   .grid { 
