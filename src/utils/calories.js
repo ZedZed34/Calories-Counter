@@ -68,4 +68,3 @@ export function goals({ tdeeValue, weightKg, targetWeightKg }) {
     bulk:        { kcal: surplus,     ...macroSplit(surplus) }
   };
 }
-// Returns a simple summary of the goals

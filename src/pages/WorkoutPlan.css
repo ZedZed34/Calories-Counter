@@ -1,0 +1,169 @@
+.workout-section {
+  margin-top: 1.5rem;
+}
+
+.goal-summary {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.goal-summary h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.goal-cutting { color: #ef4444; }
+.goal-bulking { color: #22c55e; }
+.goal-maintenance { color: #3b82f6; }
+
+.calories-summary {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.calories-summary span {
+  background: var(--bg);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+}
+
+.split-selector {
+  margin-bottom: 1.5rem;
+}
+
+.split-selector h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.split-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.split-option {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.split-option:hover {
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+
+.split-option.active {
+  border-color: #3b82f6;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+.split-option h4 {
+  margin: 0 0 0.5rem 0;
+  color: #e8edf4;
+  font-size: 1.1rem;
+}
+
+.split-option p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.plan-details {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.plan-details h3 {
+  margin: 0 0 0.5rem 0;
+  color: #3b82f6;
+  font-size: 1.3rem;
+}
+
+.plan-details > p {
+  margin: 0 0 1.5rem 0;
+  color: var(--muted);
+}
+
+.weekly-schedule {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.day-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.day-card:hover {
+  transform: translateY(-2px);
+}
+
+.day-card.rest-day {
+  opacity: 0.6;
+  background: linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(75, 85, 99, 0.1));
+}
+
+.day-card h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: #e8edf4;
+}
+
+.day-card h5 {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.day-card ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.day-card li {
+  padding: 0.25rem 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(42, 52, 65, 0.5);
+}
+
+.day-card li:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .calories-summary {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .split-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .weekly-schedule {
+    grid-template-columns: 1fr;
+  }
+}

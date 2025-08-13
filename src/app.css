@@ -1,6 +1,23 @@
 :root {
+  --bg: #0b0d10;
+  --surface: #131820;
+  --line: #2a3441;
+  --muted: #93a0b0;
+  --shadow: 0 6px 20px rgba(0,0,0,.25);
   color-scheme: dark;
 }
-* { box-sizing: border-box; }
-html, body, #svelte { margin:0; height:100%; }
-body { font-family: system-ui, Segoe UI, Inter, Roboto, Arial, sans-serif; }
+
+* { 
+  box-sizing: border-box; 
+}
+
+html, body, #root { 
+  margin: 0; 
+  height: 100%; 
+}
+
+body { 
+  font-family: system-ui, 'Segoe UI', Inter, Roboto, Arial, sans-serif; 
+  background: var(--bg);
+  color: #e8edf4;
+}
