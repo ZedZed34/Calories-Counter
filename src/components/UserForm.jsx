@@ -46,7 +46,7 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
           max="100" 
           value={form.age} 
           onChange={(e) => handleInputChange('age', e.target.value)}
-          placeholder="Enter your age" 
+          placeholder="Age" 
         />
 
         <input 
@@ -56,7 +56,7 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
           step="1" 
           value={form.heightCm} 
           onChange={(e) => handleInputChange('heightCm', e.target.value)}
-          placeholder="Enter your height (cm)" 
+          placeholder="Height (cm)" 
         />
 
         <input 
@@ -66,7 +66,7 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
           step="0.1" 
           value={form.weightKg} 
           onChange={(e) => handleInputChange('weightKg', e.target.value)}
-          placeholder="Enter your weight (kg)" 
+          placeholder="Weight (kg)" 
         />
 
         <select 
@@ -88,7 +88,7 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
             step="0.5" 
             value={form.targetWeightKg} 
             onChange={(e) => handleInputChange('targetWeightKg', e.target.value)}
-            placeholder="Enter your target weight (kg)" 
+            placeholder="Target weight (kg)" 
             className="span-2" 
           />
         )}

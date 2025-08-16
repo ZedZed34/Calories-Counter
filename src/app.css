@@ -4,6 +4,10 @@
   --line: #2a3441;
   --muted: #93a0b0;
   --shadow: 0 6px 20px rgba(0,0,0,.25);
+  --container-width-xl: 1200px;
+  --container-width-lg: 1000px;
+  --container-width-md: 768px;
+  --container-width-sm: 480px;
   color-scheme: dark;
 }
 
@@ -20,4 +24,57 @@ body {
   font-family: system-ui, 'Segoe UI', Inter, Roboto, Arial, sans-serif; 
   background: var(--bg);
   color: #e8edf4;
+  font-size: 16px;
+}
+
+/* Responsive typography */
+@media (min-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1440px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Utility classes for responsive design */
+.container {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-width-md);
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: var(--container-width-lg);
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: var(--container-width-xl);
+  }
 }

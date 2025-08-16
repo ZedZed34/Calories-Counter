@@ -1,9 +1,10 @@
 .shell { 
-  display:grid; 
+  display: grid; 
   grid-template-columns: 260px 1fr; 
   min-height: 100dvh; 
   background: var(--bg); 
-  color: #e8edf4; 
+  color: #e8edf4;
+  transition: grid-template-columns 0.3s ease;
 }
 
 aside { 
@@ -126,14 +127,14 @@ main {
   flex-direction: column; 
   align-items: center;
   gap: 2rem; 
-  max-width: 1200px;
+  max-width: var(--container-width-xl);
   margin: 0 auto;
   width: 100%;
 }
 
 .overview-page, .workout-page {
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--container-width-lg);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -168,6 +169,22 @@ main {
   color: var(--muted); 
   font-size: 1.1rem;
   margin: 0;
+}
+
+@media (max-width: 1200px) {
+  main {
+    padding: 1.75rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .shell { 
+    grid-template-columns: 220px 1fr; 
+  }
+  
+  main {
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 900px) {
