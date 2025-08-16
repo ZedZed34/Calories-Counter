@@ -35,6 +35,7 @@ export default function Overview() {
 
   return (
     <div className="overview-page">
+      <h2>Calories Calculator</h2>
       <UserForm showAdvanced={true} onCalculate={handleCalculate} />
 
       {showResults ? (

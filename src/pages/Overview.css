@@ -2,6 +2,17 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.overview-page h2 {
+  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+  color: #e8edf4;
 }
 
 .grid {
