@@ -1,0 +1,44 @@
+.overview-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+
+.placeholder {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--surface);
+  border-radius: 12px;
+  margin-top: 1rem;
+  border: 2px dashed var(--line);
+}
+
+.placeholder p {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .overview-page {
+    padding: 0 1rem;
+  }
+  
+  .placeholder {
+    padding: 2rem 1rem;
+  }
+}

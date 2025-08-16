@@ -3,6 +3,7 @@ import { bmr, tdee, goals } from '../utils/calories';
 import UserForm from '../components/UserForm';
 import ResultCard from '../components/ResultCard';
 import Modal from '../components/Modal';
+import './Overview.css';
 
 export default function Overview() {
   const [showResults, setShowResults] = useState(false);
