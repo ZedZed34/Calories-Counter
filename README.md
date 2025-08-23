@@ -1,5 +1,7 @@
 # Calories Counter & Workout Planner (React)
 
+![](./src/assets/images/Result.jpg)
+
 A modern, responsive calorie calculator and workout planner built with React that helps you determine your BMR, TDEE, calorie goals, and provides personalized workout routines.
 
 ## Features

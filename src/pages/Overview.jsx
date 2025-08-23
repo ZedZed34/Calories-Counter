@@ -55,6 +55,10 @@ export default function Overview() {
         <h3>Missing Information</h3>
         <p>Please fill out your details.</p>
       </Modal>
+      
+      <footer className="copyright-footer">
+        <p>Copyright &copy;2025 Billy Htet</p>
+      </footer>
     </div>
   );
 }
