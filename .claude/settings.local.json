@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "mcp__standout__get_design_direction"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "standout"
+  ]
 }
