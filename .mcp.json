@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "standout": {
+      "type": "http",
+      "url": "https://standoutmcp.io/api/mcp",
+      "headers": { "Authorization": "Bearer sk_trial_1fe27ba6bf8d4ff0ea84e1383ca602284cdf" }
+    }
+  }
+}
