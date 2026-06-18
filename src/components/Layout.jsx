@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FlameIcon } from './Icons';
 import './Layout.css';
@@ -10,8 +10,29 @@ export default function Layout({ children }) {
   const toggleMobileMenu = () => setIsMobileMenuOpen(prev => !prev);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
+  // Rise entrance observer — staggers .rise elements on scroll
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.rise').forEach((el, i) => {
+      el.style.transitionDelay = `${Math.min(i % 4 * 70, 210)}ms`;
+      io.observe(el);
+    });
+    return () => io.disconnect();
+  }, [location.pathname]);
+
   return (
     <div className="shell">
+      {/* Grain texture overlay */}
+      <div className="grain" />
+
       {/* Mobile overlay backdrop */}
       {isMobileMenuOpen && (
         <div className="mobile-backdrop" onClick={closeMobileMenu} />

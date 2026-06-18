@@ -108,7 +108,7 @@ export default function Overview() {
       </Modal>
 
       <footer className="copyright-footer">
-        <p>Copyright &copy;2025 Billy Htet</p>
+        <p>Copyright &copy;2026 Billy Htet</p>
       </footer>
     </div>
   );

@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Bash(python3 *)",
-      "mcp__standout__get_design_direction"
+      "mcp__standout__get_design_direction",
+      "mcp__standout__get_motion_recipes",
+      "mcp__standout__get_asset_pack",
+      "Bash(npm run *)",
+      "Bash(kill %1)",
+      "Bash(grep -rn '--\\\\\\(accent-blue\\\\|accent-violet\\\\|accent-cyan\\\\|accent-emerald\\\\|accent-amber\\\\|accent-coral\\\\|accent-pink\\\\|gradient\\\\|glow\\\\|radius-\\\\|surface-raised\\\\|surface-hover\\\\|bg-alt\\\\|muted\\\\|text-secondary\\\\|font-heading\\\\|font-body\\\\\\)' /mnt/d/Calories-Counter/src --include='*.css' --include='*.jsx')"
     ]
   },
   "enabledMcpjsonServers": [

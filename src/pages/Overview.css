@@ -1,43 +1,46 @@
 /* ═══════════════════════════════════════════
-   Overview Page
+   Overview Page — Neon Court
    ═══════════════════════════════════════════ */
 
 .overview-page {
   width: 100%;
-  max-width: var(--container-lg);
-  margin: 0 auto;
+  max-width: 56rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 2rem;
 }
 
-/* Page-specific hero — scoped under .overview-page */
+/* Page hero — left-aligned with accent border */
 .overview-page .page-hero {
-  text-align: center;
-  padding-bottom: 0.25rem;
+  text-align: left;
+  padding: clamp(0.25rem, 1vw, 0.5rem) 0 0.25rem clamp(0.85rem, 2vw, 1.25rem);
+  border-left: 4px solid var(--accent);
 }
 
 .overview-page .hero-title {
-  font-size: 2.4rem;
-  font-weight: 900;
-  letter-spacing: -0.03em;
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 5vw, 3.25rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
   margin: 0;
-  line-height: 1.15;
+  color: var(--ink);
 }
 
 .overview-page .hero-accent {
-  background: var(--gradient-blue);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent);
+  -webkit-text-fill-color: var(--accent);
+  background: none;
 }
 
 .overview-page .hero-subtitle {
-  margin: 0.5rem 0 0 0;
-  color: var(--text-secondary);
-  font-size: 1rem;
+  margin: 0.6rem 0 0 0;
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+  font-size: clamp(0.875rem, 2vw, 1rem);
   font-weight: 500;
+  max-width: 34rem;
 }
 
 /* Results */
@@ -46,49 +49,39 @@
 }
 
 .section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: -0.01em;
   margin: 0 0 1rem 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .section-title::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: var(--line);
-}
-
-/* Placeholder */
-.placeholder-icon {
-  margin-bottom: 1rem;
-  color: var(--muted);
-  opacity: 0.5;
+  background: var(--line-default);
 }
 
 /* ═══════════════════════════════════════════
    Responsive
    ═══════════════════════════════════════════ */
 
-@media (max-width: 768px) {
-  .overview-page .hero-title {
-    font-size: 1.8rem;
-  }
-
-  .overview-page .hero-subtitle {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .overview-page {
     gap: 1.25rem;
   }
 
   .overview-page .hero-title {
-    font-size: 1.5rem;
+    font-size: clamp(1.35rem, 8vw, 1.6rem);
+  }
+
+  .section-title {
+    font-size: 0.9375rem;
   }
 }

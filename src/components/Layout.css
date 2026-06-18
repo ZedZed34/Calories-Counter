@@ -1,17 +1,15 @@
 /* ═══════════════════════════════════════════
-   Shell Layout
+   Shell Layout — Neon Court
    ═══════════════════════════════════════════ */
 
 .shell {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
   min-height: 100dvh;
-  background: var(--bg);
-  color: var(--text);
+  background: var(--base);
+  color: var(--ink);
 }
 
 /* ═══════════════════════════════════════════
-   Sidebar
+   Sidebar — fixed overlay, sharp, charcoal
    ═══════════════════════════════════════════ */
 
 .sidebar {
@@ -20,8 +18,8 @@
   left: 0;
   bottom: 0;
   width: var(--sidebar-width);
-  background: linear-gradient(180deg, #0d1019 0%, #111624 100%);
-  border-right: 1px solid var(--line);
+  background: #141417;
+  border-right: 1px solid var(--line-default);
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -36,48 +34,48 @@
   gap: 0.75rem;
   margin-bottom: 2rem;
   padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px solid var(--accent);
 }
 
 .brand-icon {
-  width: 42px;
-  height: 42px;
-  background: var(--gradient-blue);
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  background: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--glow-blue);
   flex-shrink: 0;
+  box-shadow: var(--shadow-hard);
 }
 
 .brand-icon svg {
-  color: #fff;
+  color: var(--base);
 }
 
 .brand-text h1 {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text);
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--ink);
   margin: 0;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .brand-subtitle {
-  font-size: 0.7rem;
-  color: var(--muted);
-  font-weight: 500;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.14em;
 }
 
 /* Navigation */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.25rem;
   flex: 1;
 }
 
@@ -85,38 +83,31 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.7rem 0.85rem;
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
+  padding: 0.75rem 0.85rem;
+  color: color-mix(in srgb, var(--ink) 65%, transparent);
   text-decoration: none;
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.15s ease;
   position: relative;
-  overflow: hidden;
+  min-height: 44px; /* touch target */
 }
 
 .nav-link:hover {
-  background: var(--surface-hover);
-  color: var(--text);
+  background: #1A1A1E;
+  color: var(--ink);
 }
 
 .nav-link.active {
-  background: var(--surface-raised);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+  background: #1A1A1E;
+  color: var(--ink);
+  box-shadow: inset 3px 0 0 var(--accent);
 }
 
 .nav-indicator {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 24px;
-  background: var(--gradient-blue);
-  border-radius: 0 2px 2px 0;
+  display: none;
 }
 
 .nav-icon {
@@ -124,19 +115,19 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  opacity: 0.7;
+  opacity: 0.55;
 }
 
 .nav-link.active .nav-icon {
   opacity: 1;
-  color: var(--accent-blue);
+  color: var(--accent);
 }
 
 /* Sidebar footer */
 .sidebar-footer {
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-default);
 }
 
 .sidebar-stat {
@@ -148,15 +139,15 @@
 .stat-dot {
   width: 6px;
   height: 6px;
-  background: var(--accent-emerald);
-  border-radius: 50%;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  background: var(--accent);
 }
 
 .stat-text {
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-weight: 500;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
 }
 
 /* Close button (mobile only) */
@@ -165,21 +156,20 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: var(--surface-hover);
-  border: none;
-  color: var(--text-secondary);
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-sm);
+  background: #1A1A1E;
+  border: 1px solid var(--line-default);
+  color: color-mix(in srgb, var(--ink) 65%, transparent);
+  width: 44px;
+  height: 44px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .sidebar-close-btn:hover {
-  background: var(--line);
-  color: #fff;
+  background: var(--line-default);
+  color: var(--ink);
 }
 
 /* ═══════════════════════════════════════════
@@ -188,14 +178,12 @@
 
 .main-content {
   margin-left: var(--sidebar-width);
-  padding: 2rem;
+  padding: 2rem clamp(1.25rem, 4vw, 3rem);
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  width: 100%;
-  max-width: calc(var(--container-xl) + 4rem);
-  margin-right: auto;
 }
 
 /* Mobile header (hidden on desktop) */
@@ -204,61 +192,63 @@
   width: 100%;
   align-items: center;
   gap: 1rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line-default);
 }
 
 .mobile-brand {
-  font-weight: 700;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: 1rem;
-  color: var(--text);
+  text-transform: uppercase;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
 
 /* Hamburger */
 .menu-toggle {
   display: none;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: #141417;
+  border: 1px solid var(--line-default);
   cursor: pointer;
-  padding: 0.45rem;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
 }
 
 .menu-toggle:hover {
-  background: var(--surface-hover);
-  border-color: var(--line-light);
+  background: #1A1A1E;
+  border-color: var(--accent);
 }
 
 .hamburger {
   display: flex;
   flex-direction: column;
   width: 20px;
-  height: 15px;
+  height: 14px;
   position: relative;
+  justify-content: space-between;
 }
 
 .hamburger span {
   display: block;
   height: 2px;
   width: 100%;
-  background-color: var(--text);
-  border-radius: 1px;
+  background-color: var(--ink);
   transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  position: absolute;
+  position: relative;
 }
 
-.hamburger span:nth-child(1) { top: 0; }
-.hamburger span:nth-child(2) { top: 6px; }
-.hamburger span:nth-child(3) { top: 12px; }
-
 .hamburger.open span:nth-child(1) {
-  transform: rotate(45deg);
-  top: 6px;
+  transform: rotate(45deg) translate(4px, 4.5px);
 }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) {
-  transform: rotate(-45deg);
-  top: 6px;
+  transform: rotate(-45deg) translate(4px, -4.5px);
 }
 
 /* Mobile backdrop */
@@ -273,39 +263,44 @@
 .overview-page,
 .workout-page {
   width: 100%;
-  max-width: var(--container-lg);
-  margin: 0 auto;
+  max-width: 56rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 2rem;
 }
 
 .workout-page h2,
 .overview-page h2 {
-  font-family: var(--font-heading);
-  text-align: center;
+  font-family: var(--display);
+  text-transform: uppercase;
+  text-align: left;
   margin: 0;
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: 0.01em;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
 }
 
 .placeholder {
   text-align: center;
-  padding: 3rem 2rem;
-  background: var(--gradient-surface);
-  border-radius: var(--radius-lg);
-  border: 2px dashed var(--line);
+  padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+  background: #141417;
+  border: 1px solid var(--line-default);
   width: 100%;
 }
 
 .placeholder p {
-  color: var(--muted);
-  font-size: 1rem;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+  font-size: clamp(0.875rem, 2vw, 1rem);
   margin: 0;
   line-height: 1.6;
+}
+
+.placeholder-icon {
+  margin-bottom: 1rem;
+  color: var(--accent);
+  opacity: 0.35;
 }
 
 .grid {
@@ -316,22 +311,28 @@
 }
 
 /* ═══════════════════════════════════════════
-   Responsive: Tablet
+   Responsive: Phone (< 576px)
    ═══════════════════════════════════════════ */
 
-@media (max-width: 992px) {
-  .shell {
+@media (max-width: 575px) {
+  .grid {
     grid-template-columns: 1fr;
   }
+}
 
+/* ═══════════════════════════════════════════
+   Responsive: Tablet + Phone (< 992px)
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 991px) {
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: var(--shadow-xl);
   }
 
   .sidebar.sidebar-open {
     transform: translateX(0);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55);
   }
 
   .sidebar-close-btn {
@@ -340,7 +341,8 @@
 
   .main-content {
     margin-left: 0;
-    padding: 1.5rem;
+    padding: 1.25rem clamp(1.25rem, 4vw, 2rem);
+    gap: 1.5rem;
   }
 
   .mobile-header {
@@ -349,8 +351,6 @@
 
   .menu-toggle {
     display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .mobile-backdrop {
@@ -360,35 +360,20 @@
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
     z-index: 99;
-    animation: fadeIn 0.2s ease-out;
+    animation: fadeIn 0.15s ease-out;
+  }
+
+  .sidebar {
+    width: min(280px, 80vw);
   }
 }
 
 /* ═══════════════════════════════════════════
-   Responsive: Mobile
+   Responsive: Tablet portrait
    ═══════════════════════════════════════════ */
 
-@media (max-width: 576px) {
-  .main-content {
-    padding: 1rem;
-    gap: 1.25rem;
-  }
-
+@media (min-width: 576px) and (max-width: 991px) {
   .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    width: 100%;
-    max-width: 320px;
-  }
-
-  .overview-page h2,
-  .workout-page h2 {
-    font-size: 1.5rem;
-  }
-
-  .placeholder {
-    padding: 2rem 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

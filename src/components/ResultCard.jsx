@@ -4,22 +4,18 @@ import './ResultCard.css';
 
 const CARD_CONFIG = {
   'BMR': {
-    accent: 'amber',
     Icon: FlameIcon,
     description: 'Resting energy burn'
   },
   'TDEE (Maintenance)': {
-    accent: 'cyan',
     Icon: ZapIcon,
     description: 'Daily energy to maintain weight'
   },
   'Cut (Deficit)': {
-    accent: 'coral',
     Icon: TrendingDownIcon,
     description: 'Calorie deficit for fat loss'
   },
   'Bulk (Surplus)': {
-    accent: 'emerald',
     Icon: TrendingUpIcon,
     description: 'Calorie surplus for muscle gain'
   }
@@ -33,19 +29,19 @@ export default function ResultCard({
   carbsG = 0,
   staggerIndex = 0
 }) {
-  const config = CARD_CONFIG[title] || { accent: 'blue', Icon: ChartBarIcon, description: '' };
+  const config = CARD_CONFIG[title] || { Icon: ChartBarIcon, description: '' };
 
   return (
     <div
-      className={`result-card card-accent-${config.accent}`}
+      className="result-card"
       style={{ animationDelay: `${staggerIndex * 0.08}s` }}
     >
-      {/* Accent gradient bar */}
-      <div className={`card-accent-bar accent-${config.accent}`} />
+      {/* Accent bar */}
+      <div className="card-accent-bar" />
 
       {/* Header */}
       <div className="card-header">
-        <div className={`card-icon icon-${config.accent}`}>
+        <div className="card-icon">
           <config.Icon size={20} />
         </div>
         <div className="card-title-group">
@@ -57,7 +53,7 @@ export default function ResultCard({
       </div>
 
       {/* Kcal display */}
-      <div className={`card-kcal kcal-${config.accent}`}>
+      <div className="card-kcal">
         <span className="kcal-number">{kcal.toLocaleString()}</span>
         <span className="kcal-unit">kcal/day</span>
       </div>
@@ -72,7 +68,7 @@ export default function ResultCard({
             </div>
             <div className="macro-bar-track">
               <div
-                className="macro-bar-fill macro-protein"
+                className="macro-bar-fill"
                 style={{ width: `${Math.min((proteinG / 250) * 100, 100)}%` }}
               />
             </div>
@@ -85,7 +81,7 @@ export default function ResultCard({
             </div>
             <div className="macro-bar-track">
               <div
-                className="macro-bar-fill macro-fat"
+                className="macro-bar-fill"
                 style={{ width: `${Math.min((fatG / 120) * 100, 100)}%` }}
               />
             </div>
@@ -98,7 +94,7 @@ export default function ResultCard({
             </div>
             <div className="macro-bar-track">
               <div
-                className="macro-bar-fill macro-carbs"
+                className="macro-bar-fill"
                 style={{ width: `${Math.min((carbsG / 400) * 100, 100)}%` }}
               />
             </div>
