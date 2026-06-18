@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useUser } from '../hooks/useUser';
 import { ACTIVITY_LEVELS } from '../utils/calories';
+import { ZapIcon, MaleIcon, FemaleIcon, ArrowRightIcon } from './Icons';
 import './UserForm.css';
 
 export default function UserForm({ showAdvanced = true, showButton = true, onCalculate }) {
@@ -54,7 +55,7 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
   return (
     <div className="user-form-card">
       <h2 className="user-form-title">
-        <span className="title-icon">&#9889;</span>
+        <span className="title-icon"><ZapIcon size={22} /></span>
         Your Details
         <span className="title-badge">Metric</span>
       </h2>
@@ -69,14 +70,14 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
               className={`segment ${form.sex === 'male' ? 'active' : ''}`}
               onClick={() => handleInputChange('sex', 'male')}
             >
-              <span className="segment-icon">&#9794;</span> Male
+              <span className="segment-icon"><MaleIcon size={16} /></span> Male
             </button>
             <button
               type="button"
               className={`segment ${form.sex === 'female' ? 'active' : ''}`}
               onClick={() => handleInputChange('sex', 'female')}
             >
-              <span className="segment-icon">&#9792;</span> Female
+              <span className="segment-icon"><FemaleIcon size={16} /></span> Female
             </button>
           </div>
           {errors.sex && <span className="field-error">{errors.sex}</span>}
@@ -186,7 +187,7 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
       {showButton && (
         <button className="get-result-btn" onClick={handleGetResult}>
           <span className="btn-text">Calculate My Plan</span>
-          <span className="btn-arrow">&#10132;</span>
+          <span className="btn-arrow"><ArrowRightIcon size={20} /></span>
         </button>
       )}
     </div>

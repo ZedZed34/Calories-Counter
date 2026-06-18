@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import WorkoutForm from '../components/WorkoutForm';
 import Modal from '../components/Modal';
+import { FlameIcon, DumbbellIcon, ScaleIcon, RefreshCwIcon, ColumnsIcon, BarbellIcon, MoonIcon, CheckCircleIcon } from '../components/Icons';
 import './WorkoutPlan.css';
 
 // Exercise suggestions with rep/set ranges
@@ -160,9 +161,9 @@ export default function WorkoutPlan() {
   }
 
   const GOAL_LABELS = {
-    'fat-loss': { label: 'Fat Loss', icon: '🔥', color: 'coral' },
-    'bulk': { label: 'Muscle Gain', icon: '💪', color: 'emerald' },
-    'maintain': { label: 'Maintain Weight', icon: '⚖️', color: 'blue' }
+    'fat-loss': { label: 'Fat Loss', Icon: FlameIcon, color: 'coral' },
+    'bulk': { label: 'Muscle Gain', Icon: DumbbellIcon, color: 'emerald' },
+    'maintain': { label: 'Maintain Weight', Icon: ScaleIcon, color: 'blue' }
   };
 
   const workoutPlans = {
@@ -171,7 +172,7 @@ export default function WorkoutPlan() {
       description: '3 days/week • Ideal for beginners • Efficient for fat loss',
       frequency: '3x week',
       duration: '45–60 mins',
-      icon: '🔄',
+      Icon: RefreshCwIcon,
       schedule: [
         { day: 'Monday', workout: 'Full Body A', exercises: ['Squats', 'Bench Press', 'Bent-Over Row', 'Shoulder Press', 'Deadlifts', 'Plank'] },
         { day: 'Tuesday', workout: 'Rest', exercises: [] },
@@ -187,7 +188,7 @@ export default function WorkoutPlan() {
       description: '4 days/week • Great for intermediates • Balanced approach',
       frequency: '4x week',
       duration: '50–70 mins',
-      icon: '⬆⬇',
+      Icon: ColumnsIcon,
       schedule: [
         { day: 'Monday', workout: 'Upper Body A', exercises: ['Bench Press', 'Bent-Over Row', 'Shoulder Press', 'Pull-ups', 'Dips', 'Bicep Curls', 'Tricep Pushdowns'] },
         { day: 'Tuesday', workout: 'Lower Body A', exercises: ['Squats', 'Romanian Deadlifts', 'Bulgarian Split Squats', 'Hip Thrusts', 'Calf Raises', 'Leg Curls'] },
@@ -203,7 +204,7 @@ export default function WorkoutPlan() {
       description: '6 days/week • Advanced • Maximum muscle growth',
       frequency: '6x week',
       duration: '60–90 mins',
-      icon: '🏋️',
+      Icon: BarbellIcon,
       schedule: [
         { day: 'Monday', workout: 'Push A', exercises: ['Bench Press', 'Shoulder Press', 'Incline Dumbbell Press', 'Lateral Raises', 'Dips', 'Tricep Pushdowns'] },
         { day: 'Tuesday', workout: 'Pull A', exercises: ['Deadlifts', 'Pull-ups', 'Bent-Over Row', 'T-Bar Row', 'Face Pulls', 'Bicep Curls', 'Hammer Curls'] },
@@ -235,7 +236,12 @@ export default function WorkoutPlan() {
           {/* Goal summary */}
           <div className={`goal-summary goal-summary-${GOAL_LABELS[workoutPlan.goal]?.color}`}>
             <div className="goal-badge">
-              <span className="goal-icon">{GOAL_LABELS[workoutPlan.goal]?.icon}</span>
+              <span className="goal-icon">
+                {(() => {
+                  const GoalIcon = GOAL_LABELS[workoutPlan.goal]?.Icon;
+                  return GoalIcon ? <GoalIcon size={24} /> : null;
+                })()}
+              </span>
               <span className={`goal-text goal-${GOAL_LABELS[workoutPlan.goal]?.color}`}>
                 {GOAL_LABELS[workoutPlan.goal]?.label}
               </span>
@@ -270,12 +276,16 @@ export default function WorkoutPlan() {
                   className={`split-option ${selectedSplit === key ? 'active' : ''}`}
                   onClick={() => handleSplitChange(key)}
                 >
-                  <span className="split-option-icon">{plan.icon}</span>
+                  <span className="split-option-icon">{plan.Icon ? <plan.Icon size={24} /> : null}</span>
                   <div className="split-option-content">
                     <h4>{plan.title}</h4>
                     <p>{plan.description}</p>
                   </div>
-                  {selectedSplit === key && <span className="split-check">✓</span>}
+                  {selectedSplit === key && (
+                    <span className="split-check">
+                      <CheckCircleIcon size={16} />
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -285,7 +295,13 @@ export default function WorkoutPlan() {
           {selectedSplit && workoutPlans[selectedSplit] && (
             <div className="plan-details animate-in">
               <div className="plan-header">
-                <h3>{workoutPlans[selectedSplit].icon} {workoutPlans[selectedSplit].title}</h3>
+                <h3>
+                  {(() => {
+                    const PlanIcon = workoutPlans[selectedSplit].Icon;
+                    return PlanIcon ? <PlanIcon size={24} /> : null;
+                  })()}
+                  {' '}{workoutPlans[selectedSplit].title}
+                </h3>
                 <div className="plan-meta">
                   <span className="plan-meta-tag">{workoutPlans[selectedSplit].frequency}</span>
                   <span className="plan-meta-tag">{workoutPlans[selectedSplit].duration}</span>
@@ -308,7 +324,7 @@ export default function WorkoutPlan() {
                     </div>
                     {day.workout === 'Rest' ? (
                       <div className="rest-indicator">
-                        <span className="rest-icon">🛌</span>
+                        <span className="rest-icon"><MoonIcon size={16} /></span>
                         <span>Recovery Day</span>
                       </div>
                     ) : (
@@ -344,7 +360,7 @@ export default function WorkoutPlan() {
 
       {!workoutPlan && (
         <div className="placeholder">
-          <div className="placeholder-icon">&#128170;</div>
+          <div className="placeholder-icon"><DumbbellIcon size={48} /></div>
           <p>
             Fill in your details above (including your target weight goal) to get a
             <strong> personalized workout plan</strong> recommendation!

@@ -64,8 +64,9 @@
 
 /* Placeholder */
 .placeholder-icon {
-  font-size: 3rem;
   margin-bottom: 1rem;
+  color: var(--muted);
+  opacity: 0.5;
 }
 
 /* ═══════════════════════════════════════════

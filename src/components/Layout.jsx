@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { FlameIcon } from './Icons';
 import './Layout.css';
 
 export default function Layout({ children }) {
@@ -20,7 +21,7 @@ export default function Layout({ children }) {
       <aside className={`sidebar ${isMobileMenuOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-brand">
           <div className="brand-icon">
-            <span className="brand-emoji">&#9889;</span>
+            <FlameIcon size={22} />
           </div>
           <div className="brand-text">
             <h1>Calories Counter</h1>

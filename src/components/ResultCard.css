@@ -61,11 +61,11 @@
   flex-shrink: 0;
 }
 
-.icon-amber   { background: rgba(245, 158, 11, 0.12); }
-.icon-cyan    { background: rgba(6, 182, 212, 0.12); }
-.icon-coral   { background: rgba(244, 63, 94, 0.12); }
-.icon-emerald { background: rgba(16, 185, 129, 0.12); }
-.icon-blue    { background: rgba(59, 130, 246, 0.12); }
+.icon-amber   { background: rgba(245, 158, 11, 0.12); color: var(--accent-amber); }
+.icon-cyan    { background: rgba(6, 182, 212, 0.12); color: var(--accent-cyan); }
+.icon-coral   { background: rgba(244, 63, 94, 0.12); color: var(--accent-coral); }
+.icon-emerald { background: rgba(16, 185, 129, 0.12); color: var(--accent-emerald); }
+.icon-blue    { background: rgba(59, 130, 246, 0.12); color: var(--accent-blue); }
 
 .card-title-group {
   display: flex;

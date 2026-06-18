@@ -51,17 +51,18 @@
   flex-shrink: 0;
 }
 
-.brand-emoji {
-  font-size: 1.3rem;
+.brand-icon svg {
   color: #fff;
 }
 
 .brand-text h1 {
-  font-size: 1rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--text);
   margin: 0;
   line-height: 1.2;
+  letter-spacing: 0.02em;
 }
 
 .brand-subtitle {
@@ -282,12 +283,13 @@
 
 .workout-page h2,
 .overview-page h2 {
+  font-family: var(--font-heading);
   text-align: center;
   margin: 0;
   font-size: 2rem;
   font-weight: 800;
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.01em;
 }
 
 .placeholder {

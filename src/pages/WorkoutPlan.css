@@ -70,7 +70,9 @@
 }
 
 .goal-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  color: inherit;
 }
 
 .goal-text {
@@ -176,9 +178,11 @@
 }
 
 .split-option-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
   flex-shrink: 0;
   margin-top: 0.15rem;
+  color: var(--accent-violet);
 }
 
 .split-option-content {
@@ -209,8 +213,6 @@
   border-radius: 50%;
   background: var(--accent-violet);
   color: #fff;
-  font-size: 0.7rem;
-  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -328,7 +330,9 @@
 }
 
 .rest-icon {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
 }
 
 /* Exercise list */
@@ -390,8 +394,9 @@
 
 /* Placeholder */
 .placeholder-icon {
-  font-size: 3rem;
   margin-bottom: 1rem;
+  color: var(--muted);
+  opacity: 0.5;
 }
 
 /* ═══════════════════════════════════════════

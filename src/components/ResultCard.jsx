@@ -1,25 +1,26 @@
 import React from 'react';
+import { FlameIcon, ZapIcon, TrendingDownIcon, TrendingUpIcon, ChartBarIcon } from './Icons';
 import './ResultCard.css';
 
 const CARD_CONFIG = {
   'BMR': {
     accent: 'amber',
-    icon: '🔥',
+    Icon: FlameIcon,
     description: 'Resting energy burn'
   },
   'TDEE (Maintenance)': {
     accent: 'cyan',
-    icon: '⚡',
+    Icon: ZapIcon,
     description: 'Daily energy to maintain weight'
   },
   'Cut (Deficit)': {
     accent: 'coral',
-    icon: '📉',
+    Icon: TrendingDownIcon,
     description: 'Calorie deficit for fat loss'
   },
   'Bulk (Surplus)': {
     accent: 'emerald',
-    icon: '📈',
+    Icon: TrendingUpIcon,
     description: 'Calorie surplus for muscle gain'
   }
 };
@@ -32,7 +33,7 @@ export default function ResultCard({
   carbsG = 0,
   staggerIndex = 0
 }) {
-  const config = CARD_CONFIG[title] || { accent: 'blue', icon: '📊', description: '' };
+  const config = CARD_CONFIG[title] || { accent: 'blue', Icon: ChartBarIcon, description: '' };
 
   return (
     <div
@@ -45,7 +46,7 @@ export default function ResultCard({
       {/* Header */}
       <div className="card-header">
         <div className={`card-icon icon-${config.accent}`}>
-          {config.icon}
+          <config.Icon size={20} />
         </div>
         <div className="card-title-group">
           <h3 className="card-title">{title}</h3>

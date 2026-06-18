@@ -37,7 +37,9 @@
 }
 
 .title-icon {
-  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  color: var(--accent-blue);
 }
 
 .title-badge {
@@ -169,7 +171,8 @@
 }
 
 .segment-icon {
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 /* Activity chips */
@@ -278,7 +281,8 @@
 }
 
 .btn-arrow {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
   transition: transform 0.2s ease;
 }
 

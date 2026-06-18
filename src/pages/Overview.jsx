@@ -3,6 +3,7 @@ import { bmr, tdee, goals } from '../utils/calories';
 import UserForm from '../components/UserForm';
 import ResultCard from '../components/ResultCard';
 import Modal from '../components/Modal';
+import { DumbbellIcon } from '../components/Icons';
 import './Overview.css';
 
 export default function Overview() {
@@ -91,7 +92,9 @@ export default function Overview() {
         </section>
       ) : (
         <div className="placeholder">
-          <div className="placeholder-icon">&#128170;</div>
+          <div className="placeholder-icon">
+            <DumbbellIcon size={48} />
+          </div>
           <p>
             Fill in your details above (including your target weight goal) and click
             <strong> "Calculate My Plan"</strong> to see your personalized calorie calculations!
