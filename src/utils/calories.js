@@ -21,35 +21,14 @@ export function tdee({ bmrValue, activityKey }) {
 // Returns calories for different goals
 // targetWeightKg: desired target weight - automatically determines cutting or bulking
 // Uses ~7700 calories per kg of fat for calorie calculations
-// macros are optional simple defaults: P=1.8g/kg, F=25% kcal, rest carbs
+// Macros: P=1.8g/kg, F=25% kcal, remainder carbs
 export function goals({ tdeeValue, weightKg, targetWeightKg }) {
   const maintenance = tdeeValue;
-  
-  // Calculate weight difference (positive = need to lose, negative = need to gain)
   const weightDifference = weightKg - targetWeightKg;
-  
-  // Determine if cutting (losing weight) or bulking (gaining weight)
-  const isCutting = weightDifference > 0;
-  const weightToChange = Math.abs(weightDifference);
-  
-  // Set appropriate timeframes based on goal
-  const daysTarget = isCutting ? 12 * 7 : 16 * 7; // 12 weeks cut, 16 weeks bulk
-  
-  // Calculate daily calorie adjustment
-  const dailyCalorieAdjustment = Math.round((weightToChange * 7700) / daysTarget);
-  
-  // Calculate target calories (deficit for cutting, surplus for bulking)
-  const targetCalories = isCutting 
-    ? Math.round(maintenance - dailyCalorieAdjustment)
-    : Math.round(maintenance + dailyCalorieAdjustment);
-  
-  const deficit = isCutting ? targetCalories : Math.round(maintenance * 0.8); // Default 20% deficit
-  const surplus = !isCutting ? targetCalories : Math.round(maintenance * 1.1); // Default 10% surplus
 
-  // very simple macro helpers (can be tweaked in UI)
+  // Simple macro helpers
   const proteinG = Math.round(1.8 * weightKg);
   const kcalFromProtein = proteinG * 4;
-
   const fatKcalMaintenance = Math.round(maintenance * 0.25);
   const fatG = Math.round(fatKcalMaintenance / 9);
 
@@ -62,9 +41,41 @@ export function goals({ tdeeValue, weightKg, targetWeightKg }) {
     };
   }
 
+  // When weights are equal (maintain), return only maintenance with no cut/bulk adjustment
+  if (Math.abs(weightDifference) < 0.1) {
+    return {
+      maintenance: { kcal: maintenance, ...macroSplit(maintenance) },
+      cut:         { kcal: Math.round(maintenance * 0.85), ...macroSplit(Math.round(maintenance * 0.85)) },
+      bulk:        { kcal: Math.round(maintenance * 1.1), ...macroSplit(Math.round(maintenance * 1.1)) }
+    };
+  }
+
+  const isCutting = weightDifference > 0;
+  const weightToChange = Math.abs(weightDifference);
+
+  // 12 weeks for cutting, 16 weeks for bulking
+  const daysTarget = isCutting ? 12 * 7 : 16 * 7;
+
+  // Daily calorie adjustment based on ~7700 kcal per kg of fat
+  const dailyCalorieAdjustment = Math.round((weightToChange * 7700) / daysTarget);
+
+  // Calculate the primary goal calories
+  const primaryTarget = isCutting
+    ? Math.round(maintenance - dailyCalorieAdjustment)
+    : Math.round(maintenance + dailyCalorieAdjustment);
+
+  // The secondary goal shows a sensible default for the opposite direction
+  const secondaryCut = isCutting
+    ? primaryTarget                                                          // This IS the cut target
+    : Math.round(maintenance * 0.8);                                        // Default 20% deficit when bulking
+
+  const secondaryBulk = !isCutting
+    ? primaryTarget                                                          // This IS the bulk target
+    : Math.round(maintenance * 1.1);                                        // Default 10% surplus when cutting
+
   return {
     maintenance: { kcal: maintenance, ...macroSplit(maintenance) },
-    cut:         { kcal: deficit,     ...macroSplit(deficit) },
-    bulk:        { kcal: surplus,     ...macroSplit(surplus) }
+    cut:         { kcal: secondaryCut, ...macroSplit(secondaryCut) },
+    bulk:        { kcal: secondaryBulk, ...macroSplit(secondaryBulk) }
   };
 }

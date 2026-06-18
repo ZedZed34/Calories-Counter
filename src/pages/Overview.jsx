@@ -13,20 +13,24 @@ export default function Overview() {
   const [showModal, setShowModal] = useState(false);
 
   function handleCalculate(userData) {
-    // Validate that all required fields are filled
-    if (!userData.sex || !userData.age || !userData.heightCm || !userData.weightKg || !userData.activityKey || !userData.targetWeightKg) {
+    if (!userData.sex || !userData.age || !userData.heightCm ||
+        !userData.weightKg || !userData.activityKey || !userData.targetWeightKg) {
       setShowModal(true);
       return;
     }
-    
-    setShowResults(true);
+
     const calculatedBmr = bmr(userData);
     const calculatedTdee = tdee({ bmrValue: calculatedBmr, activityKey: userData.activityKey });
-    const calculatedGoals = goals({ tdeeValue: calculatedTdee, weightKg: userData.weightKg, targetWeightKg: userData.targetWeightKg });
-    
+    const calculatedGoals = goals({
+      tdeeValue: calculatedTdee,
+      weightKg: parseFloat(userData.weightKg),
+      targetWeightKg: parseFloat(userData.targetWeightKg)
+    });
+
     setBmrValue(calculatedBmr);
     setTdeeValue(calculatedTdee);
     setG(calculatedGoals);
+    setShowResults(true);
   }
 
   useEffect(() => {
@@ -35,27 +39,71 @@ export default function Overview() {
 
   return (
     <div className="overview-page">
-      <h2>Calories Calculator</h2>
+      {/* Hero header */}
+      <div className="page-hero">
+        <h2 className="hero-title">
+          <span className="hero-accent">Calories</span> Calculator
+        </h2>
+        <p className="hero-subtitle">
+          Calculate your daily energy needs and get personalized macro targets
+        </p>
+      </div>
+
       <UserForm showAdvanced={true} onCalculate={handleCalculate} />
 
       {showResults ? (
-        <section className="grid">
-          <ResultCard title="BMR" kcal={bmrValue} proteinG={g.maintenance.proteinG} fatG={g.maintenance.fatG} carbsG={g.maintenance.carbsG} />
-          <ResultCard title="TDEE (Maintenance)" kcal={tdeeValue} proteinG={g.maintenance.proteinG} fatG={g.maintenance.fatG} carbsG={g.maintenance.carbsG} />
-          <ResultCard title="Cut (Deficit)" kcal={g.cut.kcal} proteinG={g.cut.proteinG} fatG={g.cut.fatG} carbsG={g.cut.carbsG} />
-          <ResultCard title="Bulk (Surplus)" kcal={g.bulk.kcal} proteinG={g.bulk.proteinG} fatG={g.bulk.fatG} carbsG={g.bulk.carbsG} />
+        <section className="results-section">
+          <h3 className="section-title">Your Results</h3>
+          <div className="grid">
+            <ResultCard
+              title="BMR"
+              kcal={bmrValue}
+              proteinG={0}
+              fatG={0}
+              carbsG={0}
+              staggerIndex={0}
+            />
+            <ResultCard
+              title="TDEE (Maintenance)"
+              kcal={tdeeValue}
+              proteinG={g.maintenance.proteinG || 0}
+              fatG={g.maintenance.fatG || 0}
+              carbsG={g.maintenance.carbsG || 0}
+              staggerIndex={1}
+            />
+            <ResultCard
+              title="Cut (Deficit)"
+              kcal={g.cut.kcal || 0}
+              proteinG={g.cut.proteinG || 0}
+              fatG={g.cut.fatG || 0}
+              carbsG={g.cut.carbsG || 0}
+              staggerIndex={2}
+            />
+            <ResultCard
+              title="Bulk (Surplus)"
+              kcal={g.bulk.kcal || 0}
+              proteinG={g.bulk.proteinG || 0}
+              fatG={g.bulk.fatG || 0}
+              carbsG={g.bulk.carbsG || 0}
+              staggerIndex={3}
+            />
+          </div>
         </section>
       ) : (
         <div className="placeholder">
-          <p>Fill in your details above (including your target weight goal) and click "Get Result" to see your personalized calorie calculations!</p>
+          <div className="placeholder-icon">&#128170;</div>
+          <p>
+            Fill in your details above (including your target weight goal) and click
+            <strong> "Calculate My Plan"</strong> to see your personalized calorie calculations!
+          </p>
         </div>
       )}
 
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <h3>Missing Information</h3>
-        <p>Please fill out your details.</p>
+        <p>Please fill out all fields before calculating.</p>
       </Modal>
-      
+
       <footer className="copyright-footer">
         <p>Copyright &copy;2025 Billy Htet</p>
       </footer>

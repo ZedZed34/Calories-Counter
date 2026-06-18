@@ -1,6 +1,10 @@
+/* ═══════════════════════════════════════════
+   Overview Page
+   ═══════════════════════════════════════════ */
+
 .overview-page {
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--container-lg);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -8,48 +12,82 @@
   gap: 2rem;
 }
 
-.overview-page h2 {
+/* Page-specific hero — scoped under .overview-page */
+.overview-page .page-hero {
   text-align: center;
-  margin: 0;
-  font-size: 2rem;
-  color: #e8edf4;
+  padding-bottom: 0.25rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
+.overview-page .hero-title {
+  font-size: 2.4rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.overview-page .hero-accent {
+  background: var(--gradient-blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.overview-page .hero-subtitle {
+  margin: 0.5rem 0 0 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Results */
+.results-section {
   width: 100%;
 }
 
-.placeholder {
-  text-align: center;
-  padding: 3rem 2rem;
-  background: var(--surface);
-  border-radius: 12px;
-  margin-top: 1rem;
-  border: 2px dashed var(--line);
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.placeholder p {
-  color: var(--muted);
-  font-size: 1.1rem;
-  margin: 0;
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
 }
+
+/* Placeholder */
+.placeholder-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* ═══════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .overview-page .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .overview-page .hero-subtitle {
+    font-size: 0.9rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
   .overview-page {
-    padding: 0 1rem;
+    gap: 1.25rem;
   }
-  
-  .placeholder {
-    padding: 2rem 1rem;
+
+  .overview-page .hero-title {
+    font-size: 1.5rem;
   }
 }

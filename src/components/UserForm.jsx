@@ -4,19 +4,35 @@ import { ACTIVITY_LEVELS } from '../utils/calories';
 import './UserForm.css';
 
 export default function UserForm({ showAdvanced = true, showButton = true, onCalculate }) {
-  const { setUser } = useUser();
-  
-  // Initialize with empty form, don't use stored values for clean start
+  const { user, setUser } = useUser();
+
   const [form, setForm] = useState({
-    sex: '',
-    age: '',
-    heightCm: '',
-    weightKg: '',
-    activityKey: '',
-    targetWeightKg: ''
+    sex: user.sex || '',
+    age: user.age || '',
+    heightCm: user.heightCm || '',
+    weightKg: user.weightKg || '',
+    activityKey: user.activityKey || '',
+    targetWeightKg: user.targetWeightKg || ''
   });
 
+  const [errors, setErrors] = useState({});
+
+  function validate() {
+    const errs = {};
+    if (!form.sex) errs.sex = 'Select your sex';
+    if (!form.age || form.age < 10 || form.age > 100) errs.age = 'Enter a valid age (10–100)';
+    if (!form.heightCm || form.heightCm < 100 || form.heightCm > 230) errs.heightCm = 'Enter height in cm (100–230)';
+    if (!form.weightKg || form.weightKg < 30 || form.weightKg > 250) errs.weightKg = 'Enter weight in kg (30–250)';
+    if (!form.activityKey) errs.activityKey = 'Select activity level';
+    if (showAdvanced && (!form.targetWeightKg || form.targetWeightKg < 40 || form.targetWeightKg > 200)) {
+      errs.targetWeightKg = 'Enter target weight (40–200 kg)';
+    }
+    setErrors(errs);
+    return Object.keys(errs).length === 0;
+  }
+
   function handleGetResult() {
+    if (!validate()) return;
     setUser(form);
     if (onCalculate) {
       onCalculate(form);
@@ -25,78 +41,152 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
 
   function handleInputChange(field, value) {
     setForm(prev => ({ ...prev, [field]: value }));
+    // Clear error for this field when user types
+    if (errors[field]) {
+      setErrors(prev => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
   }
 
   return (
-    <div className="card">
-      <h2 className="title">Your Details (Metric)</h2>
-      <div className="grid">
-        <select 
-          value={form.sex} 
-          onChange={(e) => handleInputChange('sex', e.target.value)}
-        >
-          <option value="" disabled>Select your sex</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+    <div className="user-form-card">
+      <h2 className="user-form-title">
+        <span className="title-icon">&#9889;</span>
+        Your Details
+        <span className="title-badge">Metric</span>
+      </h2>
 
-        <input 
-          type="number" 
-          min="10" 
-          max="100" 
-          value={form.age} 
-          onChange={(e) => handleInputChange('age', e.target.value)}
-          placeholder="Age" 
-        />
+      <div className="form-grid">
+        {/* Sex — segmented control */}
+        <div className="field-group">
+          <label className="field-label">Biological Sex</label>
+          <div className="segmented-control">
+            <button
+              type="button"
+              className={`segment ${form.sex === 'male' ? 'active' : ''}`}
+              onClick={() => handleInputChange('sex', 'male')}
+            >
+              <span className="segment-icon">&#9794;</span> Male
+            </button>
+            <button
+              type="button"
+              className={`segment ${form.sex === 'female' ? 'active' : ''}`}
+              onClick={() => handleInputChange('sex', 'female')}
+            >
+              <span className="segment-icon">&#9792;</span> Female
+            </button>
+          </div>
+          {errors.sex && <span className="field-error">{errors.sex}</span>}
+        </div>
 
-        <input 
-          type="number" 
-          min="100" 
-          max="230" 
-          step="1" 
-          value={form.heightCm} 
-          onChange={(e) => handleInputChange('heightCm', e.target.value)}
-          placeholder="Height (cm)" 
-        />
+        {/* Age */}
+        <div className="field-group">
+          <label className="field-label">Age</label>
+          <div className="input-wrapper">
+            <input
+              type="number"
+              min="10"
+              max="100"
+              value={form.age}
+              onChange={(e) => handleInputChange('age', e.target.value)}
+              placeholder=" "
+              className={errors.age ? 'has-error' : ''}
+            />
+            <span className="input-suffix">years</span>
+          </div>
+          {errors.age && <span className="field-error">{errors.age}</span>}
+        </div>
 
-        <input 
-          type="number" 
-          min="30" 
-          max="250" 
-          step="0.1" 
-          value={form.weightKg} 
-          onChange={(e) => handleInputChange('weightKg', e.target.value)}
-          placeholder="Weight (kg)" 
-        />
+        {/* Height */}
+        <div className="field-group">
+          <label className="field-label">Height</label>
+          <div className="input-wrapper">
+            <input
+              type="number"
+              min="100"
+              max="230"
+              step="1"
+              value={form.heightCm}
+              onChange={(e) => handleInputChange('heightCm', e.target.value)}
+              placeholder=" "
+              className={errors.heightCm ? 'has-error' : ''}
+            />
+            <span className="input-suffix">cm</span>
+          </div>
+          {errors.heightCm && <span className="field-error">{errors.heightCm}</span>}
+        </div>
 
-        <select 
-          value={form.activityKey} 
-          onChange={(e) => handleInputChange('activityKey', e.target.value)}
-          className="span-2"
-        >
-          <option value="" disabled>Select your activity level</option>
-          {ACTIVITY_LEVELS.map(lvl => (
-            <option key={lvl.key} value={lvl.key}>{lvl.label}</option>
-          ))}
-        </select>
+        {/* Weight */}
+        <div className="field-group">
+          <label className="field-label">Current Weight</label>
+          <div className="input-wrapper">
+            <input
+              type="number"
+              min="30"
+              max="250"
+              step="0.1"
+              value={form.weightKg}
+              onChange={(e) => handleInputChange('weightKg', e.target.value)}
+              placeholder=" "
+              className={errors.weightKg ? 'has-error' : ''}
+            />
+            <span className="input-suffix">kg</span>
+          </div>
+          {errors.weightKg && <span className="field-error">{errors.weightKg}</span>}
+        </div>
 
+        {/* Activity Level */}
+        <div className="field-group span-2">
+          <label className="field-label">Activity Level</label>
+          <div className="activity-options">
+            {ACTIVITY_LEVELS.map((lvl, i) => (
+              <button
+                key={lvl.key}
+                type="button"
+                className={`activity-chip ${form.activityKey === lvl.key ? 'active' : ''}`}
+                onClick={() => handleInputChange('activityKey', lvl.key)}
+              >
+                <span className="activity-meter">
+                  {Array.from({ length: 5 }, (_, j) => (
+                    <span key={j} className={`meter-bar ${j <= i ? 'filled' : ''}`} />
+                  ))}
+                </span>
+                <span className="activity-label">{lvl.label}</span>
+              </button>
+            ))}
+          </div>
+          {errors.activityKey && <span className="field-error">{errors.activityKey}</span>}
+        </div>
+
+        {/* Target Weight */}
         {showAdvanced && (
-          <input 
-            type="number" 
-            min="40" 
-            max="200" 
-            step="0.5" 
-            value={form.targetWeightKg} 
-            onChange={(e) => handleInputChange('targetWeightKg', e.target.value)}
-            placeholder="Target weight (kg)" 
-            className="span-2" 
-          />
+          <div className="field-group span-2">
+            <label className="field-label">Target Weight</label>
+            <div className="input-wrapper">
+              <input
+                type="number"
+                min="40"
+                max="200"
+                step="0.5"
+                value={form.targetWeightKg}
+                onChange={(e) => handleInputChange('targetWeightKg', e.target.value)}
+                placeholder=" "
+                className={errors.targetWeightKg ? 'has-error' : ''}
+              />
+              <span className="input-suffix">kg</span>
+            </div>
+            {errors.targetWeightKg && <span className="field-error">{errors.targetWeightKg}</span>}
+          </div>
         )}
       </div>
-      
+
       {showButton && (
         <button className="get-result-btn" onClick={handleGetResult}>
-          Get Result
+          <span className="btn-text">Calculate My Plan</span>
+          <span className="btn-arrow">&#10132;</span>
         </button>
       )}
     </div>
