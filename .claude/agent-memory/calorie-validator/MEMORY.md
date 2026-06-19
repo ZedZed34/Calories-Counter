@@ -1,0 +1,1 @@
+- [Calorie Formula Audit](calorie-formula-audit.md) — BMR/TDEE/activity/macro validation results with two deviations found (0.85 vs 0.80 cut, fat macro keys on maintenance not goal)

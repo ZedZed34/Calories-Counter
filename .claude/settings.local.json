@@ -9,7 +9,9 @@
       "Bash(kill %1)",
       "Bash(grep -rn '--\\\\\\(accent-blue\\\\|accent-violet\\\\|accent-cyan\\\\|accent-emerald\\\\|accent-amber\\\\|accent-coral\\\\|accent-pink\\\\|gradient\\\\|glow\\\\|radius-\\\\|surface-raised\\\\|surface-hover\\\\|bg-alt\\\\|muted\\\\|text-secondary\\\\|font-heading\\\\|font-body\\\\\\)' /mnt/d/Calories-Counter/src --include='*.css' --include='*.jsx')",
       "Bash(npm install *)",
-      "mcp__plugin_claude-mem_mcp-search__search"
+      "mcp__plugin_claude-mem_mcp-search__search",
+      "Bash(npx vitest *)",
+      "mcp__plugin_claude-mem_mcp-search__get_observations"
     ]
   },
   "enabledMcpjsonServers": [

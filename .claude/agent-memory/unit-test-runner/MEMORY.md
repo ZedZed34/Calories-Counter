@@ -1,0 +1,2 @@
+- [Test Infrastructure](test-infrastructure.md) — Vitest config, setup, dependencies, and test scripts for this project
+- [Component Test Dependencies](testing-component-dependencies.md) — Context providers needed for component tests and selector gotchas
