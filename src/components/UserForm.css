@@ -279,6 +279,49 @@
   transform: translateX(3px);
 }
 
+/* Button row — stacks on mobile */
+.form-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.form-buttons .get-result-btn {
+  margin-top: 0;
+  flex: 1;
+}
+
+/* Save to Profile button */
+.save-profile-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-family: var(--body);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.save-profile-btn:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.save-profile-btn.saved {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: var(--base);
+}
+
 /* ═══════════════════════════════════════════
    Responsive: Phone + Small tablet
    ═══════════════════════════════════════════ */
@@ -298,10 +341,20 @@
     font-size: 0.8125rem;
   }
 
+  .form-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
   .get-result-btn {
     margin-top: 1.5rem;
     font-size: 0.875rem;
     padding: 0.9rem 1.5rem;
+  }
+
+  .form-buttons .get-result-btn {
+    margin-top: 0;
   }
 }
 

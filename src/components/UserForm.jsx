@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../hooks/useUser';
+import { useAuth } from '../hooks/useAuth';
 import { ACTIVITY_LEVELS } from '../utils/calories';
-import { ZapIcon, MaleIcon, FemaleIcon, ArrowRightIcon } from './Icons';
+import { ZapIcon, MaleIcon, FemaleIcon, ArrowRightIcon, SaveIcon } from './Icons';
 import './UserForm.css';
 
 export default function UserForm({ showAdvanced = true, showButton = true, onCalculate }) {
   const { user, setUser } = useUser();
+  const { isAuthenticated, profile, updateProfile } = useAuth();
 
   const [form, setForm] = useState({
     sex: user.sex || '',
@@ -17,6 +19,21 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
   });
 
   const [errors, setErrors] = useState({});
+  const [saved, setSaved] = useState(false);
+
+  // Pre-fill from Supabase profile when authenticated
+  useEffect(() => {
+    if (isAuthenticated && profile) {
+      setForm(prev => ({
+        sex: prev.sex || profile.sex || '',
+        age: prev.age || (profile.age ? String(profile.age) : ''),
+        heightCm: prev.heightCm || (profile.height_cm ? String(profile.height_cm) : ''),
+        weightKg: prev.weightKg || (profile.weight_kg ? String(profile.weight_kg) : ''),
+        activityKey: prev.activityKey || profile.activity_key || '',
+        targetWeightKg: prev.targetWeightKg || (profile.target_weight_kg ? String(profile.target_weight_kg) : '')
+      }));
+    }
+  }, [isAuthenticated, profile]);
 
   function validate() {
     const errs = {};
@@ -37,6 +54,24 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
     setUser(form);
     if (onCalculate) {
       onCalculate(form);
+    }
+  }
+
+  async function handleSaveToProfile() {
+    if (!isAuthenticated) return;
+    try {
+      await updateProfile({
+        sex: form.sex,
+        age: parseInt(form.age) || null,
+        height_cm: parseFloat(form.heightCm) || null,
+        weight_kg: parseFloat(form.weightKg) || null,
+        activity_key: form.activityKey || null,
+        target_weight_kg: parseFloat(form.targetWeightKg) || null
+      });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch {
+      // Silently fail — the calculator still works
     }
   }
 
@@ -184,12 +219,25 @@ export default function UserForm({ showAdvanced = true, showButton = true, onCal
         )}
       </div>
 
-      {showButton && (
-        <button className="get-result-btn" onClick={handleGetResult}>
-          <span className="btn-text">Calculate My Plan</span>
-          <span className="btn-arrow"><ArrowRightIcon size={20} /></span>
-        </button>
-      )}
+      {/* Button row */}
+      <div className="form-buttons">
+        {showButton && (
+          <button className="get-result-btn" onClick={handleGetResult}>
+            <span className="btn-text">Calculate My Plan</span>
+            <span className="btn-arrow"><ArrowRightIcon size={20} /></span>
+          </button>
+        )}
+
+        {isAuthenticated && (
+          <button
+            className={`save-profile-btn ${saved ? 'saved' : ''}`}
+            onClick={handleSaveToProfile}
+          >
+            <SaveIcon size={16} />
+            <span>{saved ? 'Saved!' : 'Save to Profile'}</span>
+          </button>
+        )}
+      </div>
     </div>
   );
 }

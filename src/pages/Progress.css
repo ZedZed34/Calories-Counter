@@ -1,0 +1,133 @@
+.progress-page {
+  width: 100%;
+  max-width: 56rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Log weight card ───────────────────────── */
+
+.log-weight-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.25rem 1.5rem;
+}
+
+.log-weight-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.log-weight-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.weight-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.weight-input {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+.weight-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.weight-save-btn {
+  padding: 0.6rem 1.25rem;
+  border: none;
+  background: var(--accent);
+  color: var(--base);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  font-family: inherit;
+}
+.weight-save-btn:hover { opacity: 0.9; }
+.weight-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Range selector ────────────────────────── */
+
+.range-selector {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.range-btn {
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.range-btn:hover {
+  border-color: var(--accent);
+  color: var(--fg);
+}
+.range-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--base);
+}
+
+/* ── Chart cards ──────────────────────────── */
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+}
+
+.chart-card h3 {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chart-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.chart-empty p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ── Responsive ────────────────────────────── */
+
+@media (max-width: 575px) {
+  .weight-input-group {
+    flex-direction: column;
+  }
+  .range-selector {
+    justify-content: center;
+  }
+}

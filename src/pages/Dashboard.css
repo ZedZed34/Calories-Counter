@@ -1,0 +1,338 @@
+.dashboard-page {
+  width: 100%;
+  max-width: 56rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Calorie ring ─────────────────────────── */
+
+.calorie-overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.calorie-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+}
+
+.ring-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ring-progress {
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-calories {
+  font-family: var(--display, inherit);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--fg);
+}
+
+.ring-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.goal-badges {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.goal-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: #1A1A1E;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line);
+}
+
+.goal-badge-item svg {
+  color: var(--accent);
+}
+
+/* ── Macro bars ────────────────────────────── */
+
+.macro-section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+}
+
+.macro-section h3 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.macro-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.macro-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.macro-name {
+  width: 60px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+}
+
+.macro-track {
+  flex: 1;
+  height: 8px;
+  background: #1A1A1E;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.macro-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.protein-fill { background: #3b82f6; }
+.fat-fill { background: #f59e0b; }
+.carbs-fill { background: #22c55e; }
+
+.macro-nums {
+  width: 110px;
+  font-size: 0.8rem;
+  color: var(--fg);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.macro-target {
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+/* ── Today's food log ──────────────────────── */
+
+.today-log-section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.add-food-link {
+  padding: 0.4rem 0.85rem;
+  background: var(--accent);
+  color: var(--base);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: opacity 0.15s;
+}
+
+.add-food-link:hover { opacity: 0.9; }
+
+.empty-log {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.empty-log p {
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.cta-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.cta-link:hover { text-decoration: underline; }
+
+.food-log-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.food-log-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  background: #1A1A1E;
+  border: 1px solid var(--line);
+}
+
+.food-log-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.meal-type-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.15rem 0.4rem;
+  background: var(--bg);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.meal-breakfast .meal-type-tag { color: #f59e0b; border-color: #f59e0b33; }
+.meal-lunch .meal-type-tag { color: #22c55e; border-color: #22c55e33; }
+.meal-dinner .meal-type-tag { color: #3b82f6; border-color: #3b82f633; }
+.meal-snack .meal-type-tag { color: #a855f7; border-color: #a855f733; }
+
+.food-name {
+  font-size: 0.85rem;
+  color: var(--fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.food-servings {
+  font-size: 0.7rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.food-log-macros {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  font-size: 0.8rem;
+  color: var(--fg);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.macro-mini {
+  font-size: 0.6rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.delete-entry-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.delete-entry-btn:hover { color: #ef4444; }
+
+/* ── Quick links ──────────────────────────── */
+
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.quick-link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.15s;
+}
+
+.quick-link-card:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.quick-link-card svg {
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.quick-link-card:hover svg {
+  opacity: 1;
+}
+
+@media (max-width: 575px) {
+  .quick-links {
+    grid-template-columns: 1fr;
+  }
+  .food-log-macros {
+    display: none;
+  }
+}
