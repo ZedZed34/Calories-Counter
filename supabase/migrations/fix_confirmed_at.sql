@@ -1,0 +1,2 @@
+ALTER TABLE auth.users ALTER COLUMN confirmed_at DROP EXPRESSION IF EXISTS;
+ALTER TABLE auth.users ALTER COLUMN confirmed_at SET DEFAULT now();
