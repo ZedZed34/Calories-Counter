@@ -74,15 +74,19 @@ ALTER TABLE custom_foods ENABLE ROW LEVEL SECURITY;
 
 -- Each user can only access their own rows
 
+DROP POLICY IF EXISTS "Users own profiles" ON profiles;
 CREATE POLICY "Users own profiles" ON profiles
   FOR ALL USING (auth.uid() = id);
 
+DROP POLICY IF EXISTS "Users own weight logs" ON weight_logs;
 CREATE POLICY "Users own weight logs" ON weight_logs
   FOR ALL USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users own food entries" ON food_entries;
 CREATE POLICY "Users own food entries" ON food_entries
   FOR ALL USING (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users own custom foods" ON custom_foods;
 CREATE POLICY "Users own custom foods" ON custom_foods
   FOR ALL USING (auth.uid() = user_id);
 
