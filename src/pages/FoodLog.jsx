@@ -29,9 +29,11 @@ export default function FoodLog() {
   }, [loggedDate]);
 
   async function fetchEntries() {
+    if (!user) return;
     const { data } = await supabase
       .from('food_entries')
       .select('*')
+      .eq('user_id', user.id)
       .eq('logged_date', loggedDate)
       .order('created_at', { ascending: false });
     if (data) setEntries(data);
@@ -85,7 +87,8 @@ export default function FoodLog() {
   }
 
   async function deleteEntry(id) {
-    await supabase.from('food_entries').delete().eq('id', id);
+    if (!user) return;
+    await supabase.from('food_entries').delete().eq('user_id', user.id).eq('id', id);
     fetchEntries();
   }
 

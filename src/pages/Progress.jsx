@@ -30,6 +30,7 @@ export default function Progress() {
   }, [range]);
 
   async function fetchData() {
+    if (!user) return;
     setLoading(true);
 
     let dateFilter = null;
@@ -43,6 +44,7 @@ export default function Progress() {
     let weightQuery = supabase
       .from('weight_logs')
       .select('*')
+      .eq('user_id', user.id)
       .order('logged_date', { ascending: true });
 
     if (dateFilter) weightQuery = weightQuery.gte('logged_date', dateFilter);
@@ -54,6 +56,7 @@ export default function Progress() {
     let calorieQuery = supabase
       .from('food_entries')
       .select('logged_date, calories')
+      .eq('user_id', user.id)
       .order('logged_date', { ascending: true });
 
     if (dateFilter) calorieQuery = calorieQuery.gte('logged_date', dateFilter);

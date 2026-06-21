@@ -7,7 +7,7 @@ import { FlameIcon, TrendingDownIcon, TrendingUpIcon, TargetIcon } from '../comp
 import './Dashboard.css';
 
 export default function Dashboard() {
-  const { profile } = useAuth();
+  const { user, profile } = useAuth();
   const [todayEntries, setTodayEntries] = useState([]);
   const [todayTotals, setTodayTotals] = useState({ calories: 0, proteinG: 0, fatG: 0, carbsG: 0 });
   const [goalsData, setGoalsData] = useState(null);
@@ -42,9 +42,11 @@ export default function Dashboard() {
   }, [profile]);
 
   async function fetchTodayData() {
+    if (!user) return;
     const { data } = await supabase
       .from('food_entries')
       .select('*')
+      .eq('user_id', user.id)
       .eq('logged_date', today)
       .order('created_at', { ascending: false });
 
@@ -67,7 +69,8 @@ export default function Dashboard() {
   }
 
   async function deleteEntry(id) {
-    await supabase.from('food_entries').delete().eq('id', id);
+    if (!user) return;
+    await supabase.from('food_entries').delete().eq('user_id', user.id).eq('id', id);
     fetchTodayData();
   }
 

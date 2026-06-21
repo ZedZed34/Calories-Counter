@@ -74,7 +74,6 @@ export function AuthProvider({ children }) {
     <AuthCtx.Provider value={{
       user,
       profile,
-      session,
       loading,
       isAuthenticated,
       signUp,
